@@ -12,6 +12,7 @@ import {
 import { IconCheck } from "@tabler/icons-react";
 import logo from "../../public/img/lambda_logo.png";
 import classes from "./styles/HeroBullets.module.css";
+import { Link } from "react-router-dom";
 
 export function Hero() {
   return (
@@ -23,9 +24,8 @@ export function Hero() {
             estamos contigo <br />
           </Title>
           <Text c="dimmed" mt="md">
-            Build fully functional accessible web applications faster than ever
-            – Mantine includes more than 120 customizable components and hooks
-            to cover you in any situation
+            Aprende de manera gratuita y sin límites con Lambda y su comunidad
+            de tutores y estudiantes de todo el mundo
           </Text>
 
           <List
@@ -57,25 +57,29 @@ export function Hero() {
           </List>
 
           <Group mt={30}>
-            <Button
-              radius="xl"
-              size="md"
-              color="grape"
-              className={classes.control}
-            >
-              Registrarse
-            </Button>
-            <Button
-              variant="default"
-              radius="xl"
-              size="md"
-              className={classes.control}
-            >
-              Ingresar
-            </Button>
+            <Link to={"/login"}>
+              <Button
+                radius="xl"
+                size="md"
+                color="grape"
+                className={classes.control}
+              >
+                Registrarse
+              </Button>
+            </Link>
+            <Link to={"/login"}>
+              <Button
+                variant="default"
+                radius="xl"
+                size="md"
+                className={classes.control}
+              >
+                Ingresar
+              </Button>
+            </Link>
           </Group>
         </div>
-        <Image src={logo} className={classes.image} />
+        {/* <Image src={logo} className={classes.image} /> */}
       </div>
     </Container>
   );

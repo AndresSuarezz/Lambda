@@ -48,7 +48,7 @@ export function AuthenticationForm(props) {
         </Group>
 
         <Divider
-          label="Or continue with email"
+          label="O continua con tu correo"
           labelPosition="center"
           my="lg"
         />
@@ -57,8 +57,8 @@ export function AuthenticationForm(props) {
           <Stack>
             {type === "register" && (
               <TextInput
-                label="Name"
-                placeholder="Your name"
+                label="Nombre"
+                placeholder="Tu nombre"
                 value={form.values.name}
                 onChange={(event) =>
                   form.setFieldValue("name", event.currentTarget.value)
@@ -69,8 +69,8 @@ export function AuthenticationForm(props) {
 
             <TextInput
               required
-              label="Email"
-              placeholder="hello@mantine.dev"
+              label="Correo"
+              placeholder="hello@lambda.com"
               value={form.values.email}
               onChange={(event) =>
                 form.setFieldValue("email", event.currentTarget.value)
@@ -81,8 +81,8 @@ export function AuthenticationForm(props) {
 
             <PasswordInput
               required
-              label="Password"
-              placeholder="Your password"
+              label="Contraseña"
+              placeholder="tu contraseña"
               value={form.values.password}
               onChange={(event) =>
                 form.setFieldValue("password", event.currentTarget.value)
@@ -96,7 +96,7 @@ export function AuthenticationForm(props) {
 
             {type === "register" && (
               <Checkbox
-                label="I accept terms and conditions"
+                label="Acepto los terminos y condiciones"
                 checked={form.values.terms}
                 onChange={(event) =>
                   form.setFieldValue("terms", event.currentTarget.checked)
@@ -114,8 +114,8 @@ export function AuthenticationForm(props) {
               size="xs"
             >
               {type === "register"
-                ? "Already have an account? Login"
-                : "Don't have an account? Register"}
+                ? "Tienes una cuenta? Ingresar"
+                : "Aun no estas registrado? Registrarse"}
             </Anchor>
             <Button type="submit" radius="xl">
               {upperFirst(type)}
