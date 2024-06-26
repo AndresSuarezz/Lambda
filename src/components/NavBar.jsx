@@ -14,7 +14,7 @@ import { useDisclosure } from "@mantine/hooks";
 import classes from "../../styles/HeaderMegaMenu.module.css";
 import logo from "../../public/img/logo.png";
 import { Link, useLocation } from "react-router-dom";
-import { IconSearch } from "@tabler/icons-react";
+import { IconSearch, IconCamera } from "@tabler/icons-react";
 
 export function HeaderMegaMenu() {
   const params = useLocation();
@@ -46,13 +46,28 @@ export function HeaderMegaMenu() {
                 styles={{ section: { pointerEvents: "none" } }}
               />
             )}
-            <Link to={"/login"}>
+            {ruta === "/home" ? (
               <Button variant="default">
-              {ruta === "/home" ? "Solcitud" : "Ingresar"}
+                {ruta === "/home" ? "Solicitud" : "Ingresar"}
               </Button>
-            </Link>
+            ) : (
+              <Link to={"/login"}>
+                <Button variant="default">
+                  {ruta === "/home" ? "Solicitud" : "Ingresar"}
+                </Button>
+              </Link>
+            )}
             <Link>
-              <Button>{ruta === "/home" ? "Crear Clase" : "Registrarse"}</Button>
+              <Button>
+                {ruta === "/home" ? (
+                  <div className={classes.mainLinkInner}>
+                    <IconCamera />
+                    <span>Iniciar Clase</span>
+                  </div>
+                ) : (
+                  "Registrarse"
+                )}
+              </Button>
             </Link>
           </Group>
 
@@ -69,7 +84,7 @@ export function HeaderMegaMenu() {
         onClose={closeDrawer}
         size="100%"
         padding="md"
-        title="Navigation"
+        title="Navegación"
         hiddenFrom="sm"
         zIndex={1000000}
       >
@@ -77,11 +92,36 @@ export function HeaderMegaMenu() {
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">
+            {/* {ruta === "/home" && (
+              <TextInput
+                placeholder="Buscar"
+                size="xs"
+                leftSection={
+                  <IconSearch
+                    style={{ width: rem(12), height: rem(12) }}
+                    stroke={1.5}
+                  />
+                }
+                rightSectionWidth={70}
+                styles={{ section: { pointerEvents: "none" } }}
+              />
+            )} */}
             <Link to={"/login"}>
-              <Button variant="default">Ingresar</Button>
+              <Button variant="default">
+                {ruta === "/home" ? "Solicitud" : "Ingresar"}
+              </Button>
             </Link>
             <Link>
-              <Button>Registrarse</Button>
+              <Button>
+                {ruta === "/home" ? (
+                  <div className={classes.mainLinkInner}>
+                    <IconCamera />
+                    <span>Iniciar Clase</span>
+                  </div>
+                ) : (
+                  "Registrarse"
+                )}
+              </Button>
             </Link>
           </Group>
         </ScrollArea>

@@ -55,3 +55,9 @@
   border-top: rem(1px) solid
     light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
 }
+
+.mainLinkInner {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
