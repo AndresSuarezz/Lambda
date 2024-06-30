@@ -8,6 +8,7 @@ import {
   Badge,
   Button,
   ActionIcon,
+  Tooltip,
 } from "@mantine/core";
 import classes from "../../style/BadgeCard.module.css";
 
@@ -37,7 +38,9 @@ export function BadgeCard({ image, title, description, tutor }) {
           Ingresar
         </Button>
         <ActionIcon variant="default" radius="md" size={36}>
-          <IconHeart className={classes.like} stroke={1.5} />
+          <Tooltip withArrow label="¡Donar!">
+            <IconHeart className={classes.like} stroke={1.5} />
+          </Tooltip>
         </ActionIcon>
       </Group>
     </Card>

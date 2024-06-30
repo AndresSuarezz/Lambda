@@ -12,9 +12,10 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "../../styles/HeaderMegaMenu.module.css";
-import logo from "../../public/img/logo.png";
+import logo from "/img/logo.png";
 import { Link, useLocation } from "react-router-dom";
 import { IconSearch, IconCamera } from "@tabler/icons-react";
+import ModalPop from "../modal/Modal";
 
 export function HeaderMegaMenu() {
   const params = useLocation();
@@ -48,12 +49,12 @@ export function HeaderMegaMenu() {
             )}
             {ruta === "/home" ? (
               <Button variant="default">
-                {ruta === "/home" ? "Solicitud" : "Ingresar"}
+                {ruta === "/home" ? <ModalPop /> : "Ingresar"}
               </Button>
             ) : (
               <Link to={"/login"}>
                 <Button variant="default">
-                  {ruta === "/home" ? "Solicitud" : "Ingresar"}
+                  {ruta === "/home" ? <ModalPop /> : "Ingresar"}
                 </Button>
               </Link>
             )}

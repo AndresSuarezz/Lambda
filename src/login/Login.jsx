@@ -1,127 +1,61 @@
-import { useToggle, upperFirst } from "@mantine/hooks";
-import { useForm } from "@mantine/form";
 import {
   TextInput,
   PasswordInput,
-  Text,
   Paper,
-  Group,
+  Title,
+  Text,
+  Container,
   Button,
   Divider,
-  Checkbox,
-  Anchor,
-  Stack,
-  Container,
 } from "@mantine/core";
 import { GoogleButton } from "../assets/icons/GoogleButton";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { db } from "../firebase/firebase";
+import { setDoc, doc } from "firebase/firestore";
 
-export function AuthenticationForm(props) {
-  const [type, toggle] = useToggle(["login", "register"]);
-  const form = useForm({
-    initialValues: {
-      email: "",
-      name: "",
-      password: "",
-      terms: true,
-    },
+export function AuthenticationTitle() {
+  const auth = useAuth();
+  const navigate = useNavigate()
 
-    validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
-      password: (val) =>
-        val.length <= 6
-          ? "Password should include at least 6 characters"
-          : null,
-    },
-  });
+  const handleGoogle = async (e) => {
+    e.preventDefault()
+    await auth.loginWithGoogle()
+    const {displayName, email, photoURL, uid } = auth.user
+    await setDoc(doc(db, "users", uid), {
+      displayName,
+      email,
+      id: uid,
+      photoURL 
+    });
+    localStorage.setItem("user", JSON.stringify(auth.user))
+    navigate("/home")
+  }
 
   return (
-    <Container size={"xs"} mt={40}>
-      <Paper radius="md" p="xl" withBorder {...props}>
-        <Text size="lg" fw={500}>
-          Bienvenido a Lambda, {type} para continuar
-        </Text>
+    <Container size={420} my={40}>
+      <Title ta="center">Bienvenido!</Title>
+      <Text c="dimmed" size="sm" ta="center" mt={5}>
+        Inicia Sesion{" "}
+      </Text>
 
-        <Group grow mb="md" mt="md">
-          <GoogleButton size={"md"} radius="xl">
-            Google
-          </GoogleButton>
-        </Group>
-
-        <Divider
-          label="O continua con tu correo"
-          labelPosition="center"
-          my="lg"
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        <TextInput label="Correo" placeholder="correo@lambda.dev" required />
+        <PasswordInput
+          label="Contraseña"
+          placeholder="tu contraseña"
+          required
+          mt="md"
         />
 
-        <form onSubmit={form.onSubmit(() => {})}>
-          <Stack>
-            {type === "register" && (
-              <TextInput
-                label="Nombre"
-                placeholder="Tu nombre"
-                value={form.values.name}
-                onChange={(event) =>
-                  form.setFieldValue("name", event.currentTarget.value)
-                }
-                radius="md"
-              />
-            )}
+        <Button fullWidth mt="xl">
+          Iniciar Sesion
+        </Button>
+        <Divider my="md" label="O inicia sesion con" />
 
-            <TextInput
-              required
-              label="Correo"
-              placeholder="hello@lambda.com"
-              value={form.values.email}
-              onChange={(event) =>
-                form.setFieldValue("email", event.currentTarget.value)
-              }
-              error={form.errors.email && "Invalid email"}
-              radius="md"
-            />
-
-            <PasswordInput
-              required
-              label="Contraseña"
-              placeholder="tu contraseña"
-              value={form.values.password}
-              onChange={(event) =>
-                form.setFieldValue("password", event.currentTarget.value)
-              }
-              error={
-                form.errors.password &&
-                "Password should include at least 6 characters"
-              }
-              radius="md"
-            />
-
-            {type === "register" && (
-              <Checkbox
-                label="Acepto los terminos y condiciones"
-                checked={form.values.terms}
-                onChange={(event) =>
-                  form.setFieldValue("terms", event.currentTarget.checked)
-                }
-              />
-            )}
-          </Stack>
-
-          <Group justify="space-between" mt="xl">
-            <Anchor
-              component="button"
-              type="button"
-              c="dimmed"
-              onClick={() => toggle()}
-              size="xs"
-            >
-              {type === "register"
-                ? "Tienes una cuenta? Ingresar"
-                : "Aun no estas registrado? Registrarse"}
-            </Anchor>
-            <Button type="submit" radius="xl">
-              {upperFirst(type)}
-            </Button>
-          </Group>
-        </form>
+        <GoogleButton onClick={(e) => handleGoogle(e)}  fullWidth mt="xl">
+          Iniciar Sesion
+        </GoogleButton>
       </Paper>
     </Container>
   );
