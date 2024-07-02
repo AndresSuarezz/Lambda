@@ -12,10 +12,14 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { AppVideo } from "./components/videocall/AppVideo";
 
 function App() {
+
   return (
     <AuthProvider>
+      <Toaster position="top-center" reverseOrder={false}/>
       <Router>
         <HeaderMegaMenu />
         <Routes>
@@ -23,8 +27,9 @@ function App() {
           <Route path="/" element={<Hero />} />
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home children={<Outlet />} />}>
-            <Route path="/home/" element={<Start />} />
+            <Route path="/home" element={<Start />} />
           </Route>
+          <Route path="/home/call/:roomId" element={<AppVideo/>} />
         </Routes>
       </Router>
     </AuthProvider>

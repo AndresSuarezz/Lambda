@@ -11,12 +11,29 @@ import {
   Tooltip,
 } from "@mantine/core";
 import classes from "../../style/BadgeCard.module.css";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../../firebase/firebase";
+import { Link } from "react-router-dom";
 
-export function BadgeCard({ image, title, description, tutor }) {
+export function BadgeCard({ coverUrl, title, description, authorId, roomId }) {
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    const query = collection(db, "users");
+    const suscribed = onSnapshot(query, (snapshot) => {
+      snapshot.forEach((doc) => {
+        if (doc.id === authorId) {
+          setUser(doc.data().displayName);
+        }
+      });
+    });
+    return () => suscribed();
+  }, [authorId]);
+
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
       <Card.Section>
-        <Image src={image} alt={title} height={120} />
+        <Image src={coverUrl} alt={title} height={120} />
       </Card.Section>
 
       <Card.Section className={classes.section} mt="md">
@@ -25,7 +42,7 @@ export function BadgeCard({ image, title, description, tutor }) {
             {title}
           </Text>
           <Badge size="sm" variant="light">
-            {tutor}
+            {user}
           </Badge>
         </Group>
         <Text fz="sm" mt="xs">
@@ -34,9 +51,9 @@ export function BadgeCard({ image, title, description, tutor }) {
       </Card.Section>
 
       <Group mt="xs">
-        <Button radius="md" style={{ flex: 1 }}>
-          Ingresar
-        </Button>
+        <Link to={`call/${roomId}`}>
+          <Button radius="md">Brindar Tutoria</Button>
+        </Link>
         <ActionIcon variant="default" radius="md" size={36}>
           <Tooltip withArrow label="¡Donar!">
             <IconHeart className={classes.like} stroke={1.5} />

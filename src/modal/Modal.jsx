@@ -1,7 +1,6 @@
 import { useDisclosure } from "@mantine/hooks";
 import { Button, Input, Modal, Text, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { createPostSolicitud } from "../firebase/controller";
 // import { Group, rem } from "@mantine/core";
@@ -10,23 +9,27 @@ import { createPostSolicitud } from "../firebase/controller";
 
 const ModalPop = () => {
   const auth = useAuth();
-  const { displayName } = auth.user || localStorage.getItem("user");
+  const { uid } = auth.user || localStorage.getItem("user");
   const [opened, { open, close }] = useDisclosure(false);
-  const [consulta, setConsulta] = useState({});
 
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
       title: "",
-      description: "",
-      requester: displayName,
+      requesterDescription: "",
+      requesterId: uid,
     },
   });
 
-  const sendData = async () => {
+  const sendData = async (consulta) => {
     try {
+      console.log(consulta)
       await createPostSolicitud(consulta);
       close();
+      form.setValues({
+        title: "",
+        requesterDescription: "",
+      })
     } catch (error) {
       console.log(error);
     }
@@ -35,7 +38,7 @@ const ModalPop = () => {
   return (
     <>
       <Modal opened={opened} onClose={close} title="Hacer solicitud de tutoría">
-        <form onSubmit={form.onSubmit((values) => setConsulta(values))}>
+        <form onSubmit={form.onSubmit((values) => sendData(values))}>
           <Input.Wrapper mb={5} label="Titulo">
             <Input
               placeholder="Escribe aqui el titulo"
@@ -48,9 +51,13 @@ const ModalPop = () => {
             label="Descripción"
             description="Escribe aqui lo que necesitas aprender"
             placeholder="No entiendo bien el tema de..."
-            key={form.key("description")}
-            {...form.getInputProps("description")}
+            key={form.key("requesterDescription")}
+            {...form.getInputProps("requesterDescription")}
           />
+
+          <Button type="submit" fullWidth>
+            Crear Solcitud
+          </Button>
 
           {/* <Dropzone
             onDrop={(files) => console.log("accepted files", files)}
@@ -106,10 +113,6 @@ const ModalPop = () => {
               </div>
             </Group>
           </Dropzone> */}
-
-          <Button type="submit" fullWidth>
-            Crear Solcitud
-          </Button>
         </form>
       </Modal>
       <Text onClick={open}>Solicitar Tutoría</Text>
