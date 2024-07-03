@@ -10,7 +10,7 @@ import {
   Image,
 } from "@mantine/core";
 import { IconCheck } from "@tabler/icons-react";
-import logo from "../../public/img/lambda_logo.png";
+import logo from "../../public/img/lambda_logo.svg";
 import classes from "./styles/HeroBullets.module.css";
 import { Link } from "react-router-dom";
 
@@ -79,7 +79,7 @@ export function Hero() {
             </Link>
           </Group>
         </div>
-        {/* <Image src={logo} className={classes.image} /> */}
+        <Image src={logo} className={classes.image} />
       </div>
     </Container>
   );
