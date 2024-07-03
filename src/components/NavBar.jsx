@@ -8,14 +8,13 @@ import {
   ScrollArea,
   rem,
   Image,
-  TextInput,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "../../styles/HeaderMegaMenu.module.css";
 import logo from "/img/logo.png";
 import { Link, useLocation } from "react-router-dom";
-import { IconSearch, IconCamera } from "@tabler/icons-react";
 import ModalPop from "../modal/Modal";
+import { IconCamera } from "@tabler/icons-react";
 
 export function HeaderMegaMenu() {
   const params = useLocation();
@@ -33,7 +32,7 @@ export function HeaderMegaMenu() {
           </Link>
 
           <Group visibleFrom="sm">
-            {ruta === "/home" && (
+            {/* {ruta === "/home" && (
               <TextInput
                 placeholder="Buscar"
                 size="xs"
@@ -46,11 +45,9 @@ export function HeaderMegaMenu() {
                 rightSectionWidth={70}
                 styles={{ section: { pointerEvents: "none" } }}
               />
-            )}
+            )} */}
             {ruta === "/home" ? (
-              <Button variant="default">
-                {ruta === "/home" ? <ModalPop /> : "Ingresar"}
-              </Button>
+              <>{ruta === "/home" ? <ModalPop /> : "Ingresar"}</>
             ) : (
               <Link to={"/login"}>
                 <Button variant="default">
@@ -59,16 +56,13 @@ export function HeaderMegaMenu() {
               </Link>
             )}
             <Link>
-              <Button>
-                {ruta === "/home" ? (
-                  <div className={classes.mainLinkInner}>
-                    <IconCamera />
-                    <span>Iniciar Clase</span>
-                  </div>
-                ) : (
-                  "Registrarse"
-                )}
-              </Button>
+              {ruta === "/home" ? (
+                <div></div>
+              ) : (
+                <Link to="/login">
+                  <Button>Registrarse</Button>
+                </Link>
+              )}
             </Link>
           </Group>
 

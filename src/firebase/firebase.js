@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAJj34W5zFM1jiKSGqdhp6bG4H9wJf1LWw",
-  authDomain: "lambdaapp-ddc3e.firebaseapp.com",
-  projectId: "lambdaapp-ddc3e",
-  storageBucket: "lambdaapp-ddc3e.appspot.com",
-  messagingSenderId: "992816761973",
-  appId: "1:992816761973:web:950ebcef66851c9d8d7c3c",
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
 };
 
 export const firebaseApp = initializeApp(firebaseConfig);

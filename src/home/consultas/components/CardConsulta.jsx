@@ -4,8 +4,15 @@ import classes from "../../style/CardWithStats.module.css";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
+import ModalClass from "../../../modal/ModalClass";
 
-export function CardWithStats({ title, requesterId, description, roomId, authorId }) {
+export function CardWithStats({
+  title,
+  requesterId,
+  description,
+  roomId,
+  authorId,
+}) {
   const [user, setUser] = useState("");
   useEffect(() => {
     const query = collection(db, "users");
@@ -30,7 +37,9 @@ export function CardWithStats({ title, requesterId, description, roomId, authorI
           </Group>
         ) : (
           <Group className={classes.label} c="blue" fz="xs" fw={700}>
-            <Badge variant="light" bg="grape" c="white">Disponible</Badge>
+            <Badge variant="light" bg="grape" c="white">
+              Disponible
+            </Badge>
           </Group>
         )}
       </Group>
@@ -46,7 +55,11 @@ export function CardWithStats({ title, requesterId, description, roomId, authorI
         {description}
       </Text>
       <Group>
-          <Button>Brindar Tutoria</Button>
+        {/* Brindar Tutoria */}
+        <Button radius={"md"} fullWidth>
+          <ModalClass roomId={roomId} />
+        </Button>
+        {/* <Button>Brindar Tutoria</Button> */}
       </Group>
     </Card>
   );

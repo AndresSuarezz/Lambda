@@ -8,17 +8,16 @@ import { MyUILayout } from "./components/MyUILayout";
 // import { useEffect } from "react";
 import classes from "../../../styles/video.module.css";
 import '@stream-io/video-react-sdk/dist/css/styles.css';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const AppVideo = () => {
+  const navigate = useNavigate()
   const { roomId } = useParams()
-  //console.log(roomId)
   const { displayName, uid, photoURL } = JSON.parse(
     localStorage.getItem("user")
   );
-  //console.log(uid);
 
-  const apiKey = "kegs4gg73yzr";
+  const apiKey = import.meta.env.VITE_VIDEO_API_KEY;
   const userId = uid;
 
   const user = {
@@ -31,10 +30,15 @@ export const AppVideo = () => {
   const call = client.call("default", roomId);
   call.join({ create: true });
 
+  const leave = () => {
+    call.leave();
+    navigate(-1)
+  }
+
   return (
     <StreamVideo client={client}>
       <StreamCall call={call}>
-        <MyUILayout onLeave={() => call.leave()} style={classes.str_video}/>
+        <MyUILayout onLeave={() => leave()} style={classes.str_video}/>
       </StreamCall>
     </StreamVideo>
   );

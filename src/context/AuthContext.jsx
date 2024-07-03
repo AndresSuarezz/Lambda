@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
                 //setUser(null)
             } else {
                 const userLocalStor = JSON.parse(localStorage.getItem("user"))
-                setUser(userLocalStor || currentUser)
+                setUser(currentUser || userLocalStor)
             }
         })
         return () => sucribed()
