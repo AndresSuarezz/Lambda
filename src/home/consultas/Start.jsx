@@ -17,9 +17,7 @@ const Start = () => {
           const data = snapshot.docs.map((doc) => {
             return { ...doc.data(), id: doc.id };
           });
-          //console.log("Consulta en tiempo real:", data);
           setData(data);
-          //console.log(data)
         });
       } catch (error) {
         console.log(error);

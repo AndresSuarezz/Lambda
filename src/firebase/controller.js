@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 export const createPostSolicitud = async (consulta) => {
   try {
     const { title, requesterDescription, requesterId } = consulta;
-    //console.log(db)
     const docRef = await addDoc(collection(db, "tutoring"), {
       title,
       requesterDescription,
@@ -19,7 +18,6 @@ export const createPostSolicitud = async (consulta) => {
     const finish = updateDoc(doc(db, "tutoring", docRef.id), {
       roomId: docRef.id,
     });
-    //console.log("Enviado a firebase con exito 🔥");
     toast.promise(finish, {
       loading: "Enviando solicitud...",
       success: "Solicitud enviada con exito",

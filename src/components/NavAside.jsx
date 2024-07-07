@@ -19,7 +19,6 @@ export function NavbarSearch({ children }) {
   const handleLogOut = (e) => {
     e.preventDefault()
     auth.logout()
-    console.log("Logout button clicked");
     navigate("/")
     localStorage.removeItem("user")
   }

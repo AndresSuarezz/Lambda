@@ -27,10 +27,8 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     useEffect(()=> {
         const sucribed = onAuthStateChanged(auth, (currentUser) => {
-          //console.log(auth)
             if(!currentUser){
                 console.log("no hay usuario suscrito")
-                //setUser(null)
             } else {
                 const userLocalStor = JSON.parse(localStorage.getItem("user"))
                 setUser(currentUser || userLocalStor)
@@ -47,7 +45,6 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     await signOut(auth);
-    //console.log(response);
   };
 
   return (

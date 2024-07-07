@@ -20,7 +20,6 @@ const ModalPop = () => {
 
   const sendData = async (consulta) => {
     try {
-      //console.log(consulta);
       await createPostSolicitud(consulta);
       close();
       form.setValues({

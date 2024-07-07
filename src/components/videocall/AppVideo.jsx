@@ -5,7 +5,6 @@ import {
   StreamVideoClient,
 } from "@stream-io/video-react-sdk";
 import { MyUILayout } from "./components/MyUILayout";
-// import { useEffect } from "react";
 import classes from "../../../styles/video.module.css";
 import '@stream-io/video-react-sdk/dist/css/styles.css';
 import { useNavigate, useParams } from "react-router-dom";
