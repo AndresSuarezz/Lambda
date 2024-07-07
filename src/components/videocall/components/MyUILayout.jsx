@@ -24,7 +24,7 @@ export const MyUILayout = ({ onLeave }) => {
           <div style={{ flex: 1, position: 'relative', color: '#ffff' }}>
             <SpeakerLayout />
           </div>
-          <div style={{ padding: '10px', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ padding: '10px', display: 'flex', justifyContent: 'center', color: "#ffff" }}>
             <CallControls onLeave={onLeave} />
           </div>
         </StreamTheme>
