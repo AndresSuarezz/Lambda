@@ -52,7 +52,7 @@ export function BadgeCard({ coverUrl, title, description, authorId, roomId, pric
 
       <Group mt="xs">
         <Link to={`call/${roomId}`}>
-          <Button radius="md">{price ? `Unirse por $${price}` : "Unirse"}</Button>
+          <Button radius="md">{price ? `Unirse por $${price.toString()}` : "Unirse"}</Button>
         </Link>
         <ActionIcon variant="default" radius="md" size={36}>
           <Tooltip withArrow label="¡Donar!">

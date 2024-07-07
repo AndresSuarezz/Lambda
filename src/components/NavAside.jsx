@@ -9,7 +9,7 @@ import "../../styles/Home.css"
 
 const links = [
   { icon: IconHome, label: "Inicio", URL: "/home" },
-  { icon: IconCheckbox, label: "Tareas", notifications: 2, URL: "/" },
+  { icon: IconCheckbox, label: "Tareas", notifications: 2, URL: "/task" },
 ];
 
 export function NavbarSearch({ children }) {

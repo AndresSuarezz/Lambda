@@ -31,13 +31,14 @@ export const createPostSolicitud = async (consulta) => {
 };
 
 export const updatePostSolicitudUsingId = async (roomId, data) => {
-  const { authorId, coverUrl, description, price } = data
+  let { authorId, coverUrl, description, price } = data
+  price = parseInt(price)
   try {
     const update = updateDoc(doc(db, "tutoring", roomId), {
       authorId,
       coverUrl,
       description,
-      price,
+      price
     });
     toast.promise(update, {
       loading: "Creando clase...",

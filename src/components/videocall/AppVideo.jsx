@@ -31,7 +31,6 @@ export const AppVideo = () => {
   call.join({ create: true });
 
   const leave = () => {
-    call.leave();
     navigate(-1)
   }
 

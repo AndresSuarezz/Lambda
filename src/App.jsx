@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AppVideo } from "./components/videocall/AppVideo";
+import WorkInProgress from "./error/WorkInProgress";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/home" element={<Home children={<Outlet />} />}>
             <Route path="/home" element={<Start />} />
           </Route>
+          <Route path="/task" element={<WorkInProgress/>} />
           <Route path="/home/call/:roomId" element={<AppVideo/>} />
         </Routes>
       </Router>
