@@ -8,29 +8,45 @@ import {
   StreamTheme,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
-import '@stream-io/video-react-sdk/dist/css/styles.css';
+import "@stream-io/video-react-sdk/dist/css/styles.css";
+import "./MyUILayout.css";
+import logo from "/img/logo.png";
 
 export const MyUILayout = ({ onLeave }) => {
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
 
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+      }}
+    >
       {callingState === CallingState.JOINED ? (
-        <StreamTheme>
-          <div style={{ zIndex: -1,display: 'flex', justifyContent: 'space-between', padding: '10px'}}>
+        <div className="container-class">
+          <div className="callParticipant">
+            <StreamTheme>
+              <div className="speakerLayout">
+                <SpeakerLayout />
+              </div>
+              <div className="callControls">
+                <CallControls onLeave={onLeave} />
+              </div>
+            </StreamTheme>
+          </div>
+          <div className="participantsContainer">
+            <div className="headerParicipants">
+              <img className="imagenLogoCall" src={logo} alt="Logo" />
+              <h5>Lambda</h5>     
+            </div>
             <CallParticipantsList />
           </div>
-          <div style={{ flex: 1, position: 'relative', color: '#ffff' }}>
-            <SpeakerLayout />
-          </div>
-          <div style={{ padding: '10px', display: 'flex', justifyContent: 'center', color: "#ffff" }}>
-            <CallControls onLeave={onLeave} />
-          </div>
-        </StreamTheme>
+        </div>
       ) : (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <Loader size={30}/>
+        <div className="loader">
+          <Loader size={30} />
         </div>
       )}
     </div>

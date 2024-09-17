@@ -17,21 +17,27 @@ import WorkInProgress from "./error/WorkInProgress";
 import Welcome from "./start/Welcome";
 
 function App() {
-
   return (
     <AuthProvider>
-      <Toaster position="top-center" reverseOrder={false}/>
+      <Toaster position="top-center" reverseOrder={false} />
       <Router>
-        <HeaderMegaMenu />
         <Routes>
           <Route path="/*" element={<ErrorPage />} />
-          <Route path="/" element={<Welcome/>} />
           <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home children={<Outlet />} />}>
-            <Route path="/home" element={<Start />} />
+          <Route
+            path="/"
+            element={
+              <>
+                <HeaderMegaMenu />
+                <Outlet />
+              </>
+            }
+          >
+            <Route path="/home" element={<Home children={<Start />} />} />
+            <Route path="/" element={<Welcome />} />
           </Route>
-          <Route path="/task" element={<WorkInProgress/>} />
-          <Route path="/home/call/:roomId" element={<AppVideo/>} />
+          <Route path="/task" element={<WorkInProgress />} />
+          <Route path="/home/call/:roomId" element={<AppVideo />} />
         </Routes>
       </Router>
     </AuthProvider>
