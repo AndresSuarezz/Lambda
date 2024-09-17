@@ -1,7 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import { HeaderMegaMenu } from "./components/NavBar";
 import { AuthProvider } from "./context/AuthContext";
-import { Hero } from "./hero/Hero";
 import Home from "./home/Home";
 import Start from "./home/consultas/Start";
 import { AuthenticationTitle as Login } from "./login/Login";
@@ -15,6 +14,7 @@ import {
 import { Toaster } from "react-hot-toast";
 import { AppVideo } from "./components/videocall/AppVideo";
 import WorkInProgress from "./error/WorkInProgress";
+import Welcome from "./start/Welcome";
 
 function App() {
 
@@ -25,7 +25,7 @@ function App() {
         <HeaderMegaMenu />
         <Routes>
           <Route path="/*" element={<ErrorPage />} />
-          <Route path="/" element={<Hero />} />
+          <Route path="/" element={<Welcome/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home children={<Outlet />} />}>
             <Route path="/home" element={<Start />} />

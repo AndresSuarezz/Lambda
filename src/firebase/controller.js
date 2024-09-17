@@ -4,9 +4,10 @@ import toast from "react-hot-toast";
 
 export const createPostSolicitud = async (consulta) => {
   try {
-    const { title, requesterDescription, requesterId } = consulta;
+    const { title, topic, requesterDescription, requesterId } = consulta;
     const docRef = await addDoc(collection(db, "tutoring"), {
       title,
+      topic,
       requesterDescription,
       requesterId,
       authorId: null,

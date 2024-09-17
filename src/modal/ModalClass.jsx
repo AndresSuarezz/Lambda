@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 const ModalClass = ({ roomId }) => {
   const navigate = useNavigate();
   const auth = useAuth();
-  const { uid } = auth.user || localStorage.getItem("user");
+  const { uid } = auth.user || JSON.parse(localStorage.getItem("user"));
   const [opened, { open, close }] = useDisclosure(false);
   const [image, setImage] = useState("");
   const [imageFile, setImageFile] = useState(null);

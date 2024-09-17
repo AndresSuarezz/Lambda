@@ -1,0 +1,9 @@
+.form-contact {
+    display: block;
+    width: 60%;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}

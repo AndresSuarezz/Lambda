@@ -16,7 +16,15 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { Link } from "react-router-dom";
 
-export function BadgeCard({ coverUrl, title, description, authorId, roomId, price }) {
+export function BadgeCard({
+  coverUrl,
+  title,
+  topic,
+  description,
+  authorId,
+  roomId,
+  price,
+}) {
   const [user, setUser] = useState("");
   useEffect(() => {
     const query = collection(db, "users");
@@ -38,12 +46,15 @@ export function BadgeCard({ coverUrl, title, description, authorId, roomId, pric
 
       <Card.Section className={classes.section} mt="md">
         <Group justify="apart">
-          <Text w={"100%"} fz="lg" fw={500}>
-            {title}
-          </Text>
           <Badge size="sm" variant="light">
             {user}
           </Badge>
+          <Badge size="sm" variant="light">
+            {topic}
+          </Badge>
+          <Text w={"100%"} fz="lg" fw={500}>
+            {title}
+          </Text>
         </Group>
         <Text fz="sm" mt="xs">
           {description}
@@ -52,7 +63,9 @@ export function BadgeCard({ coverUrl, title, description, authorId, roomId, pric
 
       <Group mt="xs">
         <Link to={`call/${roomId}`}>
-          <Button radius="md">{price ? `Unirse por $${price.toString()}` : "Unirse"}</Button>
+          <Button radius="md">
+            {price ? `Unirse por $${price.toString()}` : "Unirse"}
+          </Button>
         </Link>
         <ActionIcon variant="default" radius="md" size={36}>
           <Tooltip withArrow label="¡Donar!">

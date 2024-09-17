@@ -32,20 +32,6 @@ export function HeaderMegaMenu() {
           </Link>
 
           <Group visibleFrom="sm">
-            {/* {ruta === "/home" && (
-              <TextInput
-                placeholder="Buscar"
-                size="xs"
-                leftSection={
-                  <IconSearch
-                    style={{ width: rem(12), height: rem(12) }}
-                    stroke={1.5}
-                  />
-                }
-                rightSectionWidth={70}
-                styles={{ section: { pointerEvents: "none" } }}
-              />
-            )} */}
             {ruta === "/home" ? (
               <>{ruta === "/home" ? <ModalPop /> : "Ingresar"}</>
             ) : (
@@ -55,7 +41,7 @@ export function HeaderMegaMenu() {
                 </Button>
               </Link>
             )}
-            <Link>
+            <div>
               {ruta === "/home" ? (
                 <div></div>
               ) : (
@@ -63,7 +49,7 @@ export function HeaderMegaMenu() {
                   <Button>Registrarse</Button>
                 </Link>
               )}
-            </Link>
+            </div>
           </Group>
 
           <Burger

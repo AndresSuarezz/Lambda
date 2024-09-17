@@ -1,12 +1,12 @@
 import { useDisclosure } from "@mantine/hooks";
-import { Button, Input, Modal, Text, Textarea } from "@mantine/core";
+import { Button, Input, Modal, Select, Text, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useAuth } from "../context/AuthContext";
 import { createPostSolicitud } from "../firebase/controller";
 
 const ModalPop = () => {
   const auth = useAuth();
-  const { uid } = auth.user || localStorage.getItem("user");
+  const { uid } = auth.user || JSON.parse(localStorage.getItem("user"));
   const [opened, { open, close }] = useDisclosure(false);
 
   const form = useForm({
@@ -15,6 +15,7 @@ const ModalPop = () => {
       title: "",
       requesterDescription: "",
       requesterId: uid,
+      topic: "",
     },
   });
 
@@ -25,11 +26,23 @@ const ModalPop = () => {
       form.setValues({
         title: "",
         requesterDescription: "",
+        topic: "",
       });
     } catch (error) {
       console.log(error);
     }
   };
+
+  const topics = [
+    "Matemáticas",
+    "Física",
+    "Química",
+    "Informática",
+    "Programación",
+    "Lectura Crítica",
+    "Cocina",
+    "Musica",
+  ];
 
   return (
     <>
@@ -42,6 +55,18 @@ const ModalPop = () => {
               {...form.getInputProps("title")}
             />
           </Input.Wrapper>
+          <Select
+            checkIconPosition="right"
+            data={topics}
+            pb={5}
+            label="Tema"
+            placeholder="Selecciona un tema"
+            nothingFoundMessage="No se encontraron temas"
+            searchable
+            clearable
+            key={form.key("topic")}
+            {...form.getInputProps("topic")}
+          />
           <Textarea
             mb={30}
             label="Descripción"

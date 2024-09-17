@@ -33,11 +33,13 @@
   }
 }
 
-.image {
+.imgl {
   width: rem(376px);
   height: rem(356px);
+}
 
-  @media (max-width: $mantine-breakpoint-md) {
+@media (max-width: 768px) {
+  .imgl {
     display: none;
   }
 }

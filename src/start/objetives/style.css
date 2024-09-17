@@ -1,0 +1,22 @@
+.objetives {
+    display: inline-block;
+    align-content: center;
+    margin: 50px 180px;
+}
+
+.information {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .objetives {
+        margin: 50px 50px;
+    }
+    
+    .information {
+        grid-template-columns: 1fr;
+    }
+}

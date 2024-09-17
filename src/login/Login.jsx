@@ -20,15 +20,14 @@ export function AuthenticationTitle() {
 
   const handleGoogle = async (e) => {
     e.preventDefault()
-    await auth.loginWithGoogle()
-    const {displayName, email, photoURL, uid } = auth.user
+    const user = await auth.loginWithGoogle()
+    const {displayName, email, photoURL, uid } = user
     await setDoc(doc(db, "users", uid), {
       displayName,
       email,
       id: uid,
       photoURL 
     });
-    localStorage.setItem("user", JSON.stringify(auth.user))
     navigate("/home")
   }
 

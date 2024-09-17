@@ -8,6 +8,7 @@ import ModalClass from "../../../modal/ModalClass";
 
 export function CardWithStats({
   title,
+  topic,
   requesterId,
   description,
   roomId,
@@ -48,8 +49,11 @@ export function CardWithStats({
           {title}
         </Text>
       </Group>
+      <Badge size="sm" variant="light">
+            {topic}
+          </Badge>
       <Text mt="xs" mb="xs" fz="xs">
-        {user}
+        Usuario: <span style={{fontWeight: "bold"}} >{user}</span>
       </Text>
       <Text mt="sm" mb="md" c="dimmed" fz="xs">
         {description}

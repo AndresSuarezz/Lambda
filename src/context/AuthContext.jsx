@@ -8,6 +8,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import {toast} from "react-hot-toast"
 
 //Creando el contexto del objeto
 const authContext = createContext();
@@ -25,26 +26,54 @@ export const useAuth = () => {
 export function AuthProvider({ children }) {
 
     const [user, setUser] = useState(null);
-    useEffect(()=> {
-        const sucribed = onAuthStateChanged(auth, (currentUser) => {
-            if(!currentUser){
-                console.log("no hay usuario suscrito")
-            } else {
-                const userLocalStor = JSON.parse(localStorage.getItem("user"))
-                setUser(currentUser || userLocalStor)
-            }
-        })
-        return () => sucribed()
-    },[])
+    //const navigate = useNavigate();
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        if (currentUser) {
+          // Si hay un usuario autenticado, lo seteamos directamente
+          setUser(currentUser);
+          localStorage.setItem("user", JSON.stringify(currentUser));
+        } else {
+          const userLocalStor = JSON.parse(localStorage.getItem("user"));
+          if (userLocalStor) {
+            setUser(userLocalStor);
+          } else {
+            console.log("No hay usuario suscrito");
+          }
+        }
+      });
+      return () => unsubscribe();
+    }, []);
+    
     
   //Funcion que permite loguearse con google
   const loginWithGoogle = async () => {
+    if (user) {
+      console.log("Usuario ya autenticado");
+      return user;
+    }
     const responseGoogle = new GoogleAuthProvider();
-    return await signInWithPopup(auth, responseGoogle);
+   
+    try {
+      const result = await signInWithPopup(auth, responseGoogle);
+      localStorage.setItem("user", JSON.stringify(result.user));
+      setUser(result.user);
+      toast.success("Sesion iniciada ✅", {duration: 2000})
+      return result.user;
+    } catch (error) {
+      toast.error("Error al iniciar sesion")
+      console.error("Error durante el login", error);
+    }
   };
-
+  
   const logout = async () => {
-    await signOut(auth);
+    try {
+      await signOut(auth);
+      localStorage.removeItem("user");
+      setUser(null);
+    } catch (error) {
+      console.error("Error during logout", error);
+    }
   };
 
   return (
