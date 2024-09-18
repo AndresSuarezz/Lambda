@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { Select } from "@mantine/core";
+import imgTilapia from "/img/tilapia.webp"
 // import { Image } from "@mantine/core";
 // import imageAd from "/public/img/image.png"
 
@@ -45,6 +46,10 @@ const Start = () => {
   ];
   return (
     <div>
+      <div className={classes.contenedorAnuncio}>
+        <img className={classes.imagenAnuncio} src={imgTilapia} alt="anuncio" />
+        <h3 className={classes.textoAnuncio}>TilapiaExpress</h3>
+      </div>
       <h2>Consultas Recientes</h2>
       <Select
         checkIconPosition="right"
