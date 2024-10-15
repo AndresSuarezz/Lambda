@@ -14,7 +14,9 @@ import classes from "../../style/BadgeCard.module.css";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import { createWaitingRoom } from "../../../firebase/controller";
 
 export function BadgeCard({
   coverUrl,
@@ -26,6 +28,9 @@ export function BadgeCard({
   price,
 }) {
   const [user, setUser] = useState("");
+  const auth = useAuth();
+  const { uid } = auth.user;
+  const navigate = useNavigate();
   useEffect(() => {
     const query = collection(db, "users");
     const suscribed = onSnapshot(query, (snapshot) => {
@@ -37,6 +42,15 @@ export function BadgeCard({
     });
     return () => suscribed();
   }, [authorId]);
+
+  const onClickNavigate = async (roomId) => {
+    if (authorId === uid) {
+      navigate(`/home/lobby/${roomId}`);
+    } else {
+      await createWaitingRoom(roomId, auth.user)
+      navigate(`/home/lobby/chat/${roomId}${uid}/${authorId}`);
+    }
+  };
 
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
@@ -62,11 +76,9 @@ export function BadgeCard({
       </Card.Section>
 
       <Group mt="xs">
-        <Link to={`call/${roomId}`}>
-          <Button radius="md">
-            {price ? `Unirse por $${price.toString()}` : "Unirse"}
-          </Button>
-        </Link>
+        <Button onClick={() => onClickNavigate(roomId)} radius="md">
+          {price ? `Unirse por $${price.toString()}` : "Unirse"}
+        </Button>
         <ActionIcon variant="default" radius="md" size={36}>
           <Tooltip withArrow label="¡Donar!">
             <IconHeart className={classes.like} stroke={1.5} />

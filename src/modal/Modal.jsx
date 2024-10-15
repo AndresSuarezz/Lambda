@@ -3,11 +3,17 @@ import { Button, Input, Modal, Select, Text, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useAuth } from "../context/AuthContext";
 import { createPostSolicitud } from "../firebase/controller";
+import { useState } from "react";
 
 const ModalPop = () => {
   const auth = useAuth();
-  const { uid } = auth.user || JSON.parse(localStorage.getItem("user"));
+  const { uid } =
+    auth?.user ||
+    JSON.parse(
+      localStorage.getItem("user") ? localStorage.getItem("user") : "{}"
+    );
   const [opened, { open, close }] = useDisclosure(false);
+  const [isCreated, setIsCreated] = useState(false);
 
   const form = useForm({
     mode: "uncontrolled",
@@ -21,7 +27,9 @@ const ModalPop = () => {
 
   const sendData = async (consulta) => {
     try {
+      setIsCreated(true);
       await createPostSolicitud(consulta);
+      setIsCreated(false);
       close();
       form.setValues({
         title: "",
@@ -76,11 +84,12 @@ const ModalPop = () => {
             {...form.getInputProps("requesterDescription")}
           />
 
-          <Button type="submit" fullWidth>
+          <Button type="submit" loading={isCreated} fullWidth>
             Crear Solcitud
           </Button>
         </form>
       </Modal>
+      {/* Boton de la NavBar */}
       <Button>
         <Text fw={"bold"} fz={"sm"} onClick={open}>
           Solicitar Tutoría

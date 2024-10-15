@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Loader } from "@mantine/core";
+import { Button, Loader } from "@mantine/core";
 import {
   CallControls,
   CallParticipantsList,
@@ -12,7 +12,7 @@ import "@stream-io/video-react-sdk/dist/css/styles.css";
 import "./MyUILayout.css";
 import logo from "/img/logo.png";
 
-export const MyUILayout = ({ onLeave }) => {
+export const MyUILayout = ({ onLeave, onEndCall, isAuthor }) => {
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
 
@@ -39,7 +39,8 @@ export const MyUILayout = ({ onLeave }) => {
           <div className="participantsContainer">
             <div className="headerParicipants">
               <img className="imagenLogoCall" src={logo} alt="Logo" />
-              <h5>Lambda</h5>     
+              <h5>Lambda</h5>
+              {isAuthor && <Button onClick={onEndCall}>Terminar LLamada</Button>}
             </div>
             <CallParticipantsList />
           </div>

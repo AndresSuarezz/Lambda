@@ -11,21 +11,23 @@ import {
   rem,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useAuth } from "../context/AuthContext";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { IconPhoto, IconUpload, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 import { updatePostSolicitudUsingId } from "../firebase/controller";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const ModalClass = ({ roomId }) => {
   const navigate = useNavigate();
   const auth = useAuth();
-  const { uid } = auth.user || JSON.parse(localStorage.getItem("user"));
+  const { uid } = auth?.user || JSON.parse(localStorage.getItem("user") ? localStorage.getItem("user") : "{}");
   const [opened, { open, close }] = useDisclosure(false);
   const [image, setImage] = useState("");
   const [imageFile, setImageFile] = useState(null);
+
+  const [isSelected, setIsSelected] = useState(false);
 
   const form = useForm({
     mode: "onChange",
@@ -54,13 +56,14 @@ const ModalClass = ({ roomId }) => {
         const downloadURL = await getDownloadURL(storageRef);
         consulta.coverUrl = downloadURL;
       }
-
+      setIsSelected(true);
       await updatePostSolicitudUsingId(roomId, consulta);
+      setIsSelected(false);
       close();
       form.reset();
       setImage("");
       setImageFile(null);
-      navigate(`/home/call/${roomId}`);
+      navigate(`/home/lobby/${roomId}`);
     } catch (error) {
       console.log(error);
     }
@@ -158,7 +161,7 @@ const ModalClass = ({ roomId }) => {
             </Group>
           </Dropzone>
 
-          <Button mt={20} type="submit" fullWidth>
+          <Button loading={isSelected} mt={20} type="submit" fullWidth>
             Crear
           </Button>
         </form>

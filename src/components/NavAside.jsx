@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { UnstyledButton, Badge, Button } from "@mantine/core";
-import { IconCheckbox, IconLogout, IconHome } from "@tabler/icons-react";
+import { IconCheckbox, IconLogout, IconHome, IconBlob } from "@tabler/icons-react";
 import { UserButton } from "./UserButton";
 import classes from "../../styles/NavBarSearch.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import "../../styles/Home.css"
 
 const links = [
   { icon: IconHome, label: "Inicio", URL: "/home" },
+  //{icon:  IconBlob ,label: "Sala de espera", URL: "/home/lobby"},
   { icon: IconCheckbox, label: "Tareas", notifications: 2, URL: "/task" },
 ];
 

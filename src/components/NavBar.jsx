@@ -23,6 +23,9 @@ export function HeaderMegaMenu() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
 
+  const isLobbyRoute = ruta.slice(0,12) === "/home/lobby/";
+  //console.log(isLobbyRoute);
+
   return (
     <Box>
       <header className={classes.header}>
@@ -31,26 +34,28 @@ export function HeaderMegaMenu() {
             <Image src={logo} width={60} height={60} />
           </Link>
 
-          <Group visibleFrom="sm">
-            {ruta === "/home" ? (
-              <>{ruta === "/home" ? <ModalPop /> : "Ingresar"}</>
-            ) : (
-              <Link to={"/login"}>
-                <Button variant="default">
-                  {ruta === "/home" ? <ModalPop /> : "Ingresar"}
-                </Button>
-              </Link>
-            )}
-            <div>
+          {!isLobbyRoute && (
+            <Group visibleFrom="sm">
               {ruta === "/home" ? (
-                <div></div>
+                <>{ruta === "/home" ? <ModalPop /> : "Ingresar"}</>
               ) : (
-                <Link to="/login">
-                  <Button>Registrarse</Button>
+                <Link to={"/login"}>
+                  <Button variant="default">
+                    {ruta === "/home" ? <ModalPop /> : "Ingresar"}
+                  </Button>
                 </Link>
               )}
-            </div>
-          </Group>
+              <div>
+                {ruta === "/home" ? (
+                  <div></div>
+                ) : (
+                  <Link to="/login">
+                    <Button>Registrarse</Button>
+                  </Link>
+                )}
+              </div>
+            </Group>
+          )}
 
           <Burger
             opened={drawerOpened}
@@ -72,39 +77,27 @@ export function HeaderMegaMenu() {
         <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
           <Divider my="sm" />
 
-          <Group justify="center" grow pb="xl" px="md">
-            {/* {ruta === "/home" && (
-              <TextInput
-                placeholder="Buscar"
-                size="xs"
-                leftSection={
-                  <IconSearch
-                    style={{ width: rem(12), height: rem(12) }}
-                    stroke={1.5}
-                  />
-                }
-                rightSectionWidth={70}
-                styles={{ section: { pointerEvents: "none" } }}
-              />
-            )} */}
-            <Link to={"/login"}>
-              <Button variant="default">
-                {ruta === "/home" ? "Solicitud" : "Ingresar"}
-              </Button>
-            </Link>
-            <Link>
-              <Button>
-                {ruta === "/home" ? (
-                  <div className={classes.mainLinkInner}>
-                    <IconCamera />
-                    <span>Iniciar Clase</span>
-                  </div>
-                ) : (
-                  "Registrarse"
-                )}
-              </Button>
-            </Link>
-          </Group>
+          {!isLobbyRoute && (
+            <Group justify="center" grow pb="xl" px="md">
+              <Link to={"/login"}>
+                <Button variant="default">
+                  {ruta === "/home" ? "Solicitud" : "Ingresar"}
+                </Button>
+              </Link>
+              <Link>
+                <Button>
+                  {ruta === "/home" ? (
+                    <div className={classes.mainLinkInner}>
+                      <IconCamera />
+                      <span>Iniciar Clase</span>
+                    </div>
+                  ) : (
+                    "Registrarse"
+                  )}
+                </Button>
+              </Link>
+            </Group>
+          )}
         </ScrollArea>
       </Drawer>
     </Box>

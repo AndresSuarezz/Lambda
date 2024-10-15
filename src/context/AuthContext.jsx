@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
           if (userLocalStor) {
             setUser(userLocalStor);
           } else {
-            console.log("No hay usuario suscrito");
+            //console.log("No hay usuario suscrito");
           }
         }
       });
