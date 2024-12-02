@@ -170,27 +170,26 @@ export const AppVideo = () => {
     try {
       // const response = await endTranscription();
       // console.log("endTranscriptionResponse", response);
-      const recordingUrls = await listRecordings();
-      const userEmails = await getUserEmailsFromRoom(roomId);
-      console.log("emails", userEmails);
-      console.log("recordings", recordingUrls);
+      if (isAuthor) {
+        const recordingUrls = await listRecordings();
+        const userEmails = await getUserEmailsFromRoom(roomId);
+        console.log("emails", userEmails);
+        console.log("recordings", recordingUrls);
 
-      const sendEmailResponse = sendVideoCallInfoByEmail(
-        userEmails,
-        recordingUrls,
-        roomId
-      );
+        const sendEmailResponse = sendVideoCallInfoByEmail(
+          userEmails,
+          recordingUrls,
+          roomId
+        );
 
-      toast.promise(
-        sendEmailResponse,
-        {
+        toast.promise(sendEmailResponse, {
           loading: "Enviando grabación y resumen a los correos...",
           success: "Correos enviados con éxito",
           error: "Error al enviar correos",
-        }
-      )
+        });
 
-      console.log("sendEmailResponse", sendEmailResponse);
+        console.log("sendEmailResponse", sendEmailResponse);
+      }
 
       await finishCall(roomId);
       await deleteTutoringWhenCallHasFinished(roomId);
