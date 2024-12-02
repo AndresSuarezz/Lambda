@@ -11,10 +11,12 @@ import {
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 import "./MyUILayout.css";
 import logo from "/img/logo.png";
+import { useState } from "react";
 
-export const MyUILayout = ({ onLeave, onEndCall, isAuthor }) => {
+export const MyUILayout = ({ onLeave, onEndCall, isAuthor, onStartTranscription, onEndTranscription }) => {
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
+  const [isTranscriptionActive, setIsTranscriptionActive] = useState(false);
 
   return (
     <div
@@ -40,7 +42,15 @@ export const MyUILayout = ({ onLeave, onEndCall, isAuthor }) => {
             <div className="headerParicipants">
               <img className="imagenLogoCall" src={logo} alt="Logo" />
               <h5>Lambda</h5>
-              {isAuthor && <Button onClick={onEndCall}>Terminar LLamada</Button>}
+              {isAuthor && <Button className="p-3" onClick={onEndCall}>Terminar LLamada</Button>}
+              {isAuthor && !isTranscriptionActive && <Button className="p-3" onClick={() => {
+                onStartTranscription();
+                setIsTranscriptionActive(true);
+              }}>Iniciar transcripción</Button>}
+              {isAuthor && isTranscriptionActive && <Button className="p-3" onClick={ () => {
+                onEndTranscription();
+                setIsTranscriptionActive(false);
+              } }>Finalizar Transcripción</Button>}
             </div>
             <CallParticipantsList />
           </div>

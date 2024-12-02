@@ -56,7 +56,9 @@
 
 .headerParicipants {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 10px;
 }
 
 .imagenLogoCall {
@@ -82,4 +84,8 @@
   .participantsContainer {
     margin-top: 20px;
   }
+}
+
+.p-3 {
+  padding: 18px;
 }
